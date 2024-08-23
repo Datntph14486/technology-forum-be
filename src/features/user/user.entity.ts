@@ -32,6 +32,9 @@ export class UserEntity {
     @Column({ name: 'verfify', nullable: true })
     verfify: boolean;
 
+    @Column({ name: 'hashedRT', nullable: true })
+    hashedRT: string;
+
     @Column({ name: 'blocked', nullable: true })
     blocked: boolean;
 
