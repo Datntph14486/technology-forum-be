@@ -5,13 +5,15 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import * as argon2 from 'argon2';
+
 import { UserEntity } from '../user/user.entity';
 import { Repository } from 'typeorm';
 import { SignupDTO } from './dto/signup.dto';
 import { TAuth, TTokens } from './type';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthSigninDto } from './dto/signin.dto';
+import { AuthSignInDto } from './dto/signin.dto';
 import { COMMON_MESSAGE, NOT_FOUND_ERROR } from 'src/common/constants';
 
 @Injectable()
@@ -42,13 +44,15 @@ export class AuthService {
 
             delete newUser.password;
 
+            await this.updateRefreshTokenHash(newUser.id, tokens.refreshToken);
+
             return { user, tokens };
         } catch (error) {
             throw error;
         }
     }
 
-    async signin(dto: AuthSigninDto): Promise<TAuth> {
+    async signIn(dto: AuthSignInDto): Promise<TAuth> {
         const user = await this.userRepository.findOne({
             where: {
                 username: dto.username,
@@ -61,10 +65,23 @@ export class AuthService {
 
         const tokens: TTokens = await this.generateTokens(user.id, user.email);
 
+        await this.updateRefreshTokenHash(user.id, tokens.refreshToken);
+
         return {
             user,
             tokens,
         };
+    }
+
+    async updateRefreshTokenHash(
+        userId: number,
+        refreshToken: string,
+    ): Promise<void> {
+        const hashToken = await argon2.hash(refreshToken);
+
+        await this.userRepository.update(userId, {
+            hashedRT: hashToken,
+        });
     }
 
     async refreshTokens(userId: number, refreshToken: string): Promise<TAuth> {
@@ -116,5 +133,11 @@ export class AuthService {
             accessToken,
             refreshToken,
         };
+    }
+
+    async logout(userId: number) {
+        await this.userRepository.update(userId, {
+            hashedRT: null,
+        });
     }
 }

@@ -9,3 +9,8 @@ export type TAuth = {
     user: UserEntity;
     tokens: TTokens;
 };
+
+export type JwtPayload = {
+    sub: string;
+    email: string;
+};
