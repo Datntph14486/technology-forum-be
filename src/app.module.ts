@@ -5,12 +5,13 @@ import { DatabaseModule } from './database/database.module';
 import databaseConfig from './config/database.config';
 import { FeaturesModule } from './features/features.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import awsConfig from './config/aws.config';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
-            load: [appConfig, databaseConfig],
+            load: [appConfig, databaseConfig, awsConfig],
         }),
         DatabaseModule,
         FeaturesModule,
