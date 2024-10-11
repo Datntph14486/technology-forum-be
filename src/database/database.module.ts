@@ -19,6 +19,9 @@ import { UserEntity } from 'src/features/user/user.entity';
                 autoLoadEntities: true,
                 entities: [UserEntity],
                 synchronize: true,
+                ssl: {
+                    rejectUnauthorized: false,
+                },
             }),
         }),
     ],
