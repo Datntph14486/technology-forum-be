@@ -9,6 +9,13 @@ export enum Role {
     ADMIN = 'admin',
 }
 
+export enum TOKEN_TYPE {
+    ACCESS_TOKEN = 'access_token',
+    REFRESH_TOKEN = 'refresh_token',
+}
+
+export const SERVICE_NAME = 'TechTalks';
+
 export const COMMON_MESSAGE = {
     ERR_COM_001_Required: 'ERR_COM_001_Required',
     ERR_COM_002_InvalidFormat: 'ERR_COM_002_InvalidFormat',
@@ -21,8 +28,16 @@ export const COMMON_MESSAGE = {
     ERR_COM_010_InvalidInputData: 'ERR_COM_010_InvalidInputData',
     INCORRECT_ACCOUNT: 'Incorrect username or password',
     ACCESS_DENIED: 'Access Denied',
+    TOKEN_INVALID: 'Token Invalid !',
+    RESET_PASSWORD_EXPIRED: 'The password reset code has expired',
+    PASSWORD_NOT_MATCH: 'Passwords do not match',
 };
 
 export const NOT_FOUND_ERROR = {
     USER: 'User not found!',
+};
+
+export const EXIST_ERROR = {
+    EMAIL_EXIST: 'Email already exists in the system',
+    USERNAME_EXIST: 'Username already exists in the system',
 };

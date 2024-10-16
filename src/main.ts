@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { ResponseFormatInterceptor } from './helper/response-format.interceptor';
+
+import { AppModule } from './app.module';
+import { SerializeInterceptor } from './interceptors/serialize.interceptor';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get(ConfigService);
     const appConfig = configService.get('app');
 
-    app.useGlobalInterceptors(new ResponseFormatInterceptor());
+    app.useGlobalInterceptors(new SerializeInterceptor());
 
     await app
         .listen(appConfig.port)

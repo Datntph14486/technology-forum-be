@@ -1,13 +1,19 @@
 import { S3 } from 'aws-sdk';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { FileService } from '../file/file.service';
+import { CreateFileDto } from '../file/dto/create-file.dto';
 
 @Injectable()
 export class AwsService {
     private s3: S3;
     private BUCKET: string;
 
-    constructor(private configService: ConfigService) {
+    constructor(
+        private configService: ConfigService,
+
+        private readonly fileService: FileService,
+    ) {
         this.s3 = new S3({
             accessKeyId: this.configService.get('aws').accessKey,
             secretAccessKey: this.configService.get('aws').accessSecret,
@@ -17,27 +23,35 @@ export class AwsService {
     }
 
     async upload(file) {
+        console.log('🚀 ~ file:', file);
         const { originalname } = file;
 
-        return await this.uploadS3(file.buffer, this.BUCKET, originalname);
+        return await this.uploadS3(file, this.BUCKET, originalname);
     }
 
-    async uploadS3(file, bucket, name): Promise<any> {
-        return {
-            data: await this.s3
-                .putObject({
-                    Bucket: bucket,
-                    Body: file,
-                    Key: `${new Date().getTime()}_${name}`,
-                    ContentType: 'image/jpeg',
-                })
-                .promise()
-                .then((res) => {
-                    console.log('Upload succeed', res);
-                })
-                .catch((err) => {
-                    console.log('err: ', err);
-                }),
+    async uploadS3(file, bucket: string, name: string): Promise<any> {
+        const key = `${new Date().getTime()}_${name}`;
+
+        await this.s3.putObject({
+            Bucket: bucket,
+            Body: file.buffer,
+            Key: key,
+            ContentType: file.mimetype,
+        });
+
+        const url = `https://${bucket}.s3.amazonaws.com/${key}`;
+
+        const fileData: CreateFileDto = {
+            name: key,
+            width: 10,
+            height: 10,
+            mime: file.mimetype,
+            size: 10,
+            url,
         };
+
+        const newFile = await this.fileService.create(fileData);
+
+        return newFile;
     }
 }

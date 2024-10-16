@@ -6,6 +6,7 @@ import {
     Post,
     UseGuards,
 } from '@nestjs/common';
+
 import { AuthService } from './auth.service';
 import { SignupDTO } from './dto/signup.dto';
 import { TAuth } from './type';
@@ -13,6 +14,8 @@ import { AuthSignInDto } from './dto/signin.dto';
 import { Public } from './decorators/public.decorator';
 import { RefreshTokenGuard } from './guards';
 import { getCurrentUser, getCurrentUserId } from './decorators';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -48,5 +51,19 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     logout(@getCurrentUserId() userId: number) {
         return this.authService.logout(userId);
+    }
+
+    @Public()
+    @Post('forgot-password')
+    @HttpCode(HttpStatus.OK)
+    forgotPassword(@Body() dto: ForgotPasswordDto): Promise<any> {
+        return this.authService.forgotPassword(dto);
+    }
+
+    @Public()
+    @Post('reset-password')
+    @HttpCode(HttpStatus.OK)
+    resetPassword(@Body() dto: ResetPasswordDto): Promise<any> {
+        return this.authService.resetPassword(dto);
     }
 }

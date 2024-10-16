@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
+
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../user/user.entity';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity]), JwtModule.register({})],
+    imports: [TypeOrmModule.forFeature([UserEntity]), MailModule],
     controllers: [AuthController],
-    providers: [ConfigService, AuthService],
+    providers: [ConfigService, AuthService, JwtService],
     exports: [AuthService],
 })
 export class AuthModule {}

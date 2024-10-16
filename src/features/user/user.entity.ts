@@ -1,10 +1,21 @@
 import * as bcrypt from 'bcrypt';
 import { GENDER, Role } from 'src/common/constants';
 
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    AfterLoad,
+    BaseEntity,
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    Entity,
+    JoinColumn,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { FileEntity } from '../file/file.entity';
 
 @Entity({ name: 'users' })
-export class UserEntity {
+export class UserEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -23,8 +34,8 @@ export class UserEntity {
     @Column({ type: 'enum', enum: GENDER, name: 'gender', nullable: true })
     gender: string;
 
-    @Column({ name: 'date_of_birth', nullable: true })
-    dateOfBirth: string;
+    @Column({ type: 'date', name: 'date_of_birth', nullable: true })
+    dateOfBirth: Date;
 
     @Column({ name: 'password', nullable: false })
     password: string;
@@ -53,6 +64,16 @@ export class UserEntity {
     @Column({ name: 'full_address', nullable: true })
     fullAddress: string;
 
+    @OneToOne(() => FileEntity)
+    @JoinColumn()
+    avatar: FileEntity;
+
+    @Column({ name: 'forgot_password_token', nullable: true })
+    forgotPasswordToken: string;
+
+    @Column({ name: 'forgot_password_expired_at', nullable: true })
+    forgotPasswordExpiredAt: Date;
+
     @Column({
         type: 'enum',
         name: 'role',
@@ -67,4 +88,9 @@ export class UserEntity {
             this.password = await bcrypt.hash(this.password, 10);
         }
     }
+
+    // @AfterLoad()
+    // removePassword() {
+    //     this.password = undefined;
+    // }
 }

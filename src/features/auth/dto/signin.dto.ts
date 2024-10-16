@@ -7,7 +7,7 @@ export class AuthSignInDto {
     @IsString()
     @Length(4, 20)
     @Transform(({ value }) => xss(value.trim()))
-    username: string;
+    email: string;
 
     @IsNotEmpty()
     @IsString()

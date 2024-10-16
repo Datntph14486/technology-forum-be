@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { FileEntity } from 'src/features/file/file.entity';
 import { UserEntity } from 'src/features/user/user.entity';
 
 @Module({
@@ -17,7 +18,7 @@ import { UserEntity } from 'src/features/user/user.entity';
                 password: configService.get<string>('database.password'),
                 database: configService.get<string>('database.name'),
                 autoLoadEntities: true,
-                entities: [UserEntity],
+                entities: [UserEntity, FileEntity],
                 synchronize: true,
                 ssl: {
                     rejectUnauthorized: false,
