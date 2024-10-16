@@ -16,6 +16,7 @@ import { MailService } from '../mail/mail.service';
 import { SendEmailToNewAccountDto } from '../mail/dto/send-email-to-new-account.dto';
 import { AwsService } from '../aws/aws.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -114,5 +115,23 @@ export class UserService {
         delete user.password;
 
         return user;
+    }
+
+    async update(userId: number, dto: UpdateUserDto) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        const newUser = await this.userRepository.update(user.id, {
+            ...dto,
+        });
+
+        return newUser;
     }
 }

@@ -34,19 +34,19 @@ export class FileEntity {
     provider: string;
 
     @Column({ name: 'created_at' })
-    created_at: Date;
+    createdAt: Date;
 
     @Column({ name: 'updated_at' })
-    updated_at: Date;
+    updatedAt: Date;
 
     @BeforeInsert()
     insertCreated() {
-        this.created_at = new Date();
-        this.updated_at = new Date();
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
     @BeforeUpdate()
     insertUpdated() {
-        this.updated_at = new Date();
+        this.updatedAt = new Date();
     }
 }

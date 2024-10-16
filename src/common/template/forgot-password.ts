@@ -4,5 +4,5 @@ export const emailTemplateForgotPassword = `
     <p>Verification code: <strong>{{number}}</strong></p>
     <p>Use the above verification code to navigate to the password reset screen</p>
     <p>If you did not request a password reset, you can ignore this email</p>
-    <p>Best regards</p
+    <p>Best regards</p>
 `;

@@ -23,7 +23,6 @@ export class AwsService {
     }
 
     async upload(file) {
-        console.log('🚀 ~ file:', file);
         const { originalname } = file;
 
         return await this.uploadS3(file, this.BUCKET, originalname);
@@ -32,12 +31,14 @@ export class AwsService {
     async uploadS3(file, bucket: string, name: string): Promise<any> {
         const key = `${new Date().getTime()}_${name}`;
 
-        await this.s3.putObject({
-            Bucket: bucket,
-            Body: file.buffer,
-            Key: key,
-            ContentType: file.mimetype,
-        });
+        await this.s3
+            .putObject({
+                Bucket: bucket,
+                Body: file.buffer,
+                Key: key,
+                ContentType: file.mimetype,
+            })
+            .promise();
 
         const url = `https://${bucket}.s3.amazonaws.com/${key}`;
 
@@ -46,7 +47,7 @@ export class AwsService {
             width: 10,
             height: 10,
             mime: file.mimetype,
-            size: 10,
+            size: file.size,
             url,
         };
 
