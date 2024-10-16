@@ -25,7 +25,6 @@ import {
     TOKEN_TYPE,
 } from 'src/common/constants';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import generateDigitTokens from 'src/common/util/generate-random-numbers';
 import buildEmailTemplate from 'src/common/util/build-email-template';
 import { emailTemplateForgotPassword } from 'src/common/template/forgot-password';
 import { MailService } from '../mail/mail.service';
