@@ -35,6 +35,7 @@ export const COMMON_MESSAGE = {
 
 export const NOT_FOUND_ERROR = {
     USER: 'User not found!',
+    POST: 'Post not found!',
 };
 
 export const EXIST_ERROR = {

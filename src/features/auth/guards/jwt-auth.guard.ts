@@ -5,23 +5,19 @@ import {
     Inject,
     UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { Request } from 'express';
-import { ConfigService } from '@nestjs/config';
+
 import { COMMON_MESSAGE, TOKEN_TYPE } from 'src/common/constants';
 
 export class JwtAuthGuard implements CanActivate {
-    private authService: AuthService;
-
-    constructor() {
-        // this.authService = new AuthService();
-    }
+    constructor(@Inject(AuthService) private authService: AuthService) {}
 
     canActivate(
         context: ExecutionContext,
     ): boolean | Promise<boolean> | Observable<boolean> {
         const request = context.switchToHttp().getRequest();
+
         return this.validateRequest(request);
     }
 
@@ -32,9 +28,6 @@ export class JwtAuthGuard implements CanActivate {
             if (!token) {
                 throw new UnauthorizedException(COMMON_MESSAGE.TOKEN_INVALID);
             }
-            console.log(1);
-
-            const secretKey = process.env.JWT_ACCESS_TOKEN_SECRET_KEY;
 
             const payload = await this.authService.verifyToken(
                 token,
@@ -53,6 +46,7 @@ export class JwtAuthGuard implements CanActivate {
             throw new UnauthorizedException(COMMON_MESSAGE.TOKEN_INVALID);
         }
     }
+
     extractTokenFromHeader(request: Request): string | undefined {
         const [type, token] = request.headers.authorization?.split(' ') ?? [];
 

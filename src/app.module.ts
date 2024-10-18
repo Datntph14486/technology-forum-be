@@ -9,6 +9,8 @@ import { FeaturesModule } from './features/features.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import awsConfig from './config/aws.config';
 import mailConfig from './config/mail.config';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './features/auth/guards/jwt-auth.guard';
 
 @Module({
     imports: [
@@ -25,7 +27,6 @@ import mailConfig from './config/mail.config';
         FeaturesModule,
     ],
     controllers: [],
-    providers: [],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {

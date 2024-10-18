@@ -134,4 +134,42 @@ export class UserService {
 
         return newUser;
     }
+
+    async block(userId: number) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        const userUpdated = await this.userRepository.update(
+            { id: userId },
+            { blocked: true },
+        );
+
+        return userUpdated;
+    }
+
+    async delete(userId: number) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        const userUpdated = await this.userRepository.update(
+            { id: userId },
+            { deletedAt: new Date() },
+        );
+
+        return userUpdated;
+    }
 }
