@@ -16,7 +16,9 @@ import { RefreshTokenGuard } from './guards';
 import { getCurrentUser, getCurrentUserId } from './decorators';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}

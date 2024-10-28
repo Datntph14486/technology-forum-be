@@ -31,11 +31,16 @@ export const COMMON_MESSAGE = {
     TOKEN_INVALID: 'Token Invalid !',
     RESET_PASSWORD_EXPIRED: 'The password reset code has expired',
     PASSWORD_NOT_MATCH: 'Passwords do not match',
+    FORBIDDEN: "you don't have permission to access this resource",
+    NAME_ALREADY_EXISTS: 'Name already exists !',
+    TEMPLATE_TYPE: 'Template type already exists !',
 };
 
 export const NOT_FOUND_ERROR = {
     USER: 'User not found!',
     POST: 'Post not found!',
+    TECHNOLOGY: 'Technology not found!',
+    TEMPLATE: 'Template not found !',
 };
 
 export const EXIST_ERROR = {

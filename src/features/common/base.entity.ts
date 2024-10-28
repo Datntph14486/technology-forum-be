@@ -1,21 +1,30 @@
 import {
+    BeforeInsert,
     BeforeUpdate,
     Column,
-    CreateDateColumn,
-    UpdateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 
+@Entity()
 export class BaseEntity {
-    @Column()
-    @CreateDateColumn({ type: 'timestamp', nullable: true })
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({ name: 'created_at' })
     createdAt: Date;
 
-    @Column()
-    @UpdateDateColumn({ type: 'timestamp', nullable: true })
+    @Column({ name: 'updated_at' })
     updatedAt: Date;
 
+    @BeforeInsert()
+    insertCreated() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+
     @BeforeUpdate()
-    updateDate() {
+    insertUpdated() {
         this.updatedAt = new Date();
     }
 }

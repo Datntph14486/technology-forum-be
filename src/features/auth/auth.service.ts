@@ -263,4 +263,18 @@ export class AuthService {
 
         return true;
     }
+
+    async getRoleByUserId(userId: number): Promise<string> {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        return user.role;
+    }
 }

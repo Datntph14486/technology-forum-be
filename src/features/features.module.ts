@@ -6,6 +6,9 @@ import { MailModule } from './mail/mail.module';
 import { UserModule } from './user/user.module';
 import { FileModule } from './file/file.module';
 import { RequestPostModule } from './request-post/request-post.module';
+import { TechnologyModule } from './technology/technology.module';
+import { PostModule } from './post/post.module';
+import { TemplateModule } from './template/template.module';
 
 @Module({
     imports: [
@@ -15,6 +18,9 @@ import { RequestPostModule } from './request-post/request-post.module';
         UserModule,
         FileModule,
         RequestPostModule,
+        TechnologyModule,
+        PostModule,
+        TemplateModule,
     ],
     exports: [
         AuthModule,
@@ -23,6 +29,9 @@ import { RequestPostModule } from './request-post/request-post.module';
         UserModule,
         FileModule,
         RequestPostModule,
+        TechnologyModule,
+        PostModule,
+        TemplateModule,
     ],
 })
 export class FeaturesModule {}

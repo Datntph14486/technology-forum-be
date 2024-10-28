@@ -2,17 +2,17 @@ import * as bcrypt from 'bcrypt';
 import { GENDER, Role } from 'src/common/constants';
 
 import {
-    AfterLoad,
     BaseEntity,
     BeforeInsert,
-    BeforeUpdate,
     Column,
     Entity,
     JoinColumn,
+    OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { FileEntity } from '../file/file.entity';
+import { PostEntity } from '../post/post.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -81,6 +81,10 @@ export class UserEntity extends BaseEntity {
         default: Role.CUSTOMER,
     })
     role: Role;
+
+    @OneToMany(() => PostEntity, (post) => post.author)
+    @JoinColumn()
+    posts: PostEntity[];
 
     // @Column({ name: 'created_at' })
     // created_at: Date;

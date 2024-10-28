@@ -19,13 +19,33 @@ import { UserService } from './user.service';
 import { getCurrentUserId } from '../auth/decorators';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from 'src/common/constants';
+import { RoleGuard } from '../auth/guards/roles.guard';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+@ApiTags('users')
+@ApiBearerAuth()
 @Controller('users')
 export class UserController {
     constructor(private userService: UserService) {}
 
     @Post('')
     @UseInterceptors(FileInterceptor('file'))
+    @ApiBody({
+        description: 'The data needed to create a new user',
+        type: CreateUserDto,
+        // Thêm ví dụ cho body request
+        examples: {
+            default: {
+                summary: 'A sample user object',
+                value: {
+                    username: 'john_doe',
+                    email: 'john@example.com',
+                    password: 'strongpassword123',
+                },
+            },
+        },
+    })
     @HttpCode(HttpStatus.CREATED)
     async create(
         @Body() createUserDto: CreateUserDto,
@@ -35,7 +55,9 @@ export class UserController {
     }
 
     @Get('')
-    @UseGuards(JwtAuthGuard)
+    @Roles([Role.CUSTOMER])
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @ApiResponse({ status: 200, description: 'Return all users.' })
     @HttpCode(HttpStatus.OK)
     async find() {
         return this.userService.find();

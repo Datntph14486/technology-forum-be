@@ -39,6 +39,9 @@ export class JwtAuthGuard implements CanActivate {
             }
 
             request['user'] = payload;
+            request['role'] = await this.authService.getRoleByUserId(
+                payload.sub,
+            );
 
             return true;
         } catch (error) {

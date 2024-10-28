@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { MailController } from './mail.controller';
 import { ConfigService } from '@nestjs/config';
+import { TemplateModule } from '../template/template.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { ConfigService } from '@nestjs/config';
                 },
             }),
         }),
+        TemplateModule,
     ],
     controllers: [MailController],
     providers: [MailService],
