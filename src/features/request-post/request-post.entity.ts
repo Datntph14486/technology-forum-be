@@ -21,8 +21,11 @@ export class RequestPostEntity {
     @Column({ name: 'tags', nullable: true })
     tags: string;
 
-    @Column({ name: 'topic_id', nullable: true })
+    @Column({ name: 'topic_id' })
     topicId: number;
+
+    @Column({ name: 'technology_id' })
+    technologyId: number;
 
     @Column({
         type: 'enum',

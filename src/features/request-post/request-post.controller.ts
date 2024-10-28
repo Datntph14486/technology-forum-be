@@ -1,15 +1,18 @@
 import {
     Body,
     Controller,
+    Get,
     HttpCode,
     HttpStatus,
     Param,
     Post,
+    Put,
 } from '@nestjs/common';
 
 import { getCurrentUserId } from '../auth/decorators';
 import { CreateRequestPostDto } from './dto/create-request-post.dto';
 import { RequestPostService } from './request-post.service';
+import { RejectDto } from './dto/reject.dto';
 
 @Controller('request-posts')
 export class RequestPostController {
@@ -28,5 +31,17 @@ export class RequestPostController {
     @HttpCode(HttpStatus.OK)
     async approve(@Param('id') requestPostId: number) {
         return this.requestPostService.approve(requestPostId);
+    }
+
+    @Get('')
+    @HttpCode(HttpStatus.OK)
+    async getPendingPosts() {
+        return this.requestPostService.getPendingPosts();
+    }
+
+    @Put('reject/:id')
+    @HttpCode(HttpStatus.OK)
+    async reject(@Param('id') requestPostId: number, @Body() dto: RejectDto) {
+        return this.requestPostService.reject(requestPostId, dto);
     }
 }

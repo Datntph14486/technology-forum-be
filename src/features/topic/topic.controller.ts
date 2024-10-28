@@ -1,0 +1,6 @@
+import { Controller } from '@nestjs/common';
+
+@Controller('topics')
+export class TopicController {
+    constructor() {}
+}

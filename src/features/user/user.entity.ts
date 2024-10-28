@@ -86,25 +86,8 @@ export class UserEntity extends BaseEntity {
     @JoinColumn()
     posts: PostEntity[];
 
-    // @Column({ name: 'created_at' })
-    // created_at: Date;
-
-    // @Column({ name: 'updated_at' })
-    // updated_at: Date;
-
     @Column({ name: 'deleted_at', nullable: true })
     deletedAt: Date;
-
-    // @BeforeInsert()
-    // insertCreated() {
-    //     this.created_at = new Date();
-    //     this.updated_at = new Date();
-    // }
-
-    // @BeforeUpdate()
-    // insertUpdated() {
-    //     this.updated_at = new Date();
-    // }
 
     @BeforeInsert()
     async hashPassword() {
@@ -112,9 +95,4 @@ export class UserEntity extends BaseEntity {
             this.password = await bcrypt.hash(this.password, 10);
         }
     }
-
-    // @AfterLoad()
-    // removePassword() {
-    //     this.password = undefined;
-    // }
 }

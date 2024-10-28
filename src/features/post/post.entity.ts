@@ -1,6 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../common/base.entity';
 import { UserEntity } from '../user/user.entity';
+import { TopicEntity } from '../topic/topic.entity';
+import { bool } from 'aws-sdk/clients/signer';
 
 @Entity({ name: 'posts' })
 export class PostEntity extends BaseEntity {
@@ -25,7 +27,13 @@ export class PostEntity extends BaseEntity {
     @Column({ name: 'tags' })
     tags: string;
 
+    @Column({ type: 'bool', name: 'status', default: true })
+    status: bool;
+
     @ManyToOne(() => UserEntity, (user) => user.posts)
     @JoinColumn()
     author: UserEntity;
+
+    @ManyToOne(() => TopicEntity, (topic) => topic.posts)
+    topic: TopicEntity;
 }

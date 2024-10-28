@@ -9,6 +9,7 @@ import { RequestPostModule } from './request-post/request-post.module';
 import { TechnologyModule } from './technology/technology.module';
 import { PostModule } from './post/post.module';
 import { TemplateModule } from './template/template.module';
+import { TopicModule } from './topic/topic.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { TemplateModule } from './template/template.module';
         TechnologyModule,
         PostModule,
         TemplateModule,
+        TopicModule,
     ],
     exports: [
         AuthModule,
@@ -32,6 +34,7 @@ import { TemplateModule } from './template/template.module';
         TechnologyModule,
         PostModule,
         TemplateModule,
+        TopicModule,
     ],
 })
 export class FeaturesModule {}

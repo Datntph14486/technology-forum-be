@@ -172,4 +172,18 @@ export class UserService {
 
         return userUpdated;
     }
+
+    async findById(id: number) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        return user;
+    }
 }

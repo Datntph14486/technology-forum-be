@@ -41,6 +41,7 @@ export const NOT_FOUND_ERROR = {
     POST: 'Post not found!',
     TECHNOLOGY: 'Technology not found!',
     TEMPLATE: 'Template not found !',
+    TOPIC: 'Topic not found !',
 };
 
 export const EXIST_ERROR = {
