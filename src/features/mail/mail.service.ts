@@ -2,7 +2,6 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { SendEmailDto } from './dto/send-email.dto';
-import { emailTemplateNewAccount } from 'src/common/template/email-template-new-account';
 import { SendEmailToNewAccountDto } from './dto/send-email-to-new-account.dto';
 import { NOT_FOUND_ERROR, SERVICE_NAME } from 'src/common/constants';
 import { TemplateService } from '../template/template.service';
@@ -14,7 +13,7 @@ export class MailService {
     constructor(
         private mailerService: MailerService,
 
-        // private readonly templateService: TemplateService,
+        private readonly templateService: TemplateService,
     ) {}
 
     async send(dto: SendEmailDto) {
@@ -28,17 +27,15 @@ export class MailService {
     }
 
     async sendToNewAccount(newUserDto: SendEmailToNewAccountDto) {
-        // const template = await this.templateService.findByType(
-        //     TEMPLATE_TYPE.NEW_ACCOUNT,
-        // );
-
-        const template = emailTemplateNewAccount;
+        const template = await this.templateService.findByType(
+            TEMPLATE_TYPE.NEW_ACCOUNT,
+        );
 
         if (!template) {
             throw new NotFoundException(NOT_FOUND_ERROR.TEMPLATE);
         }
 
-        const content = buildEmailTemplate(template, {
+        const content = buildEmailTemplate(template.body, {
             user_name: newUserDto.email,
             name: newUserDto.name,
             service_name: SERVICE_NAME,
@@ -47,7 +44,7 @@ export class MailService {
 
         const data: SendEmailDto = {
             target: newUserDto.email,
-            subject: 'Hello',
+            subject: template.subject,
             content,
         };
 

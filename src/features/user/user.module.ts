@@ -11,6 +11,7 @@ import { MailService } from '../mail/mail.service';
 import { AwsModule } from '../aws/aws.module';
 import { AwsService } from '../aws/aws.service';
 import { FileModule } from '../file/file.module';
+import { TemplateModule } from '../template/template.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { FileModule } from '../file/file.module';
         MailModule,
         AwsModule,
         FileModule,
+        TemplateModule,
     ],
     controllers: [UserController],
     providers: [UserService, AuthService, MailService, AwsService],
