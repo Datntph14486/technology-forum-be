@@ -1,8 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+
 import { BaseEntity } from '../common/base.entity';
 import { UserEntity } from '../user/user.entity';
 import { TopicEntity } from '../topic/topic.entity';
 import { bool } from 'aws-sdk/clients/signer';
+import { DiscussEntity } from '../discuss/discuss.entity';
 
 @Entity({ name: 'posts' })
 export class PostEntity extends BaseEntity {
@@ -35,5 +37,9 @@ export class PostEntity extends BaseEntity {
     author: UserEntity;
 
     @ManyToOne(() => TopicEntity, (topic) => topic.posts)
+    @JoinColumn()
     topic: TopicEntity;
+
+    @OneToMany(() => DiscussEntity, (discuss) => discuss.post)
+    discuss: DiscussEntity[];
 }

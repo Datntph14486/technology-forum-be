@@ -10,6 +10,7 @@ import { TechnologyModule } from './technology/technology.module';
 import { PostModule } from './post/post.module';
 import { TemplateModule } from './template/template.module';
 import { TopicModule } from './topic/topic.module';
+import { DiscussModule } from './discuss/discuss.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { TopicModule } from './topic/topic.module';
         PostModule,
         TemplateModule,
         TopicModule,
+        DiscussModule,
     ],
     exports: [
         AuthModule,
@@ -35,6 +37,7 @@ import { TopicModule } from './topic/topic.module';
         PostModule,
         TemplateModule,
         TopicModule,
+        DiscussModule,
     ],
 })
 export class FeaturesModule {}

@@ -54,4 +54,28 @@ export class PostService {
 
         return newPost;
     }
+
+    async findById(postId: number) {
+        const post = await this.postRepository.findOne({
+            where: {
+                id: postId,
+            },
+        });
+
+        if (!post) {
+            throw new NotFoundException(NOT_FOUND_ERROR.POST);
+        }
+
+        return post;
+    }
+
+    async getAll() {
+        const posts = await this.postRepository.find({
+            order: {
+                createdAt: 'ASC',
+            },
+        });
+
+        return posts;
+    }
 }

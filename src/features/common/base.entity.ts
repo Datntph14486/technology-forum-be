@@ -17,6 +17,9 @@ export class BaseEntity {
     @Column({ name: 'updated_at' })
     updatedAt: Date;
 
+    @Column({ name: 'deleted_at' })
+    deletedAt: Date;
+
     @BeforeInsert()
     insertCreated() {
         this.createdAt = new Date();

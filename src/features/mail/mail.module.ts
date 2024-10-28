@@ -5,6 +5,7 @@ import { MailService } from './mail.service';
 import { MailController } from './mail.controller';
 import { ConfigService } from '@nestjs/config';
 import { TemplateModule } from '../template/template.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
     imports: [

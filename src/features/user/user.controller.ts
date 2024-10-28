@@ -30,6 +30,8 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Post('')
+    @Roles([Role.CUSTOMER, Role.ADMIN])
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @UseInterceptors(FileInterceptor('file'))
     @ApiBody({
         description: 'The data needed to create a new user',
@@ -55,7 +57,7 @@ export class UserController {
     }
 
     @Get('')
-    @Roles([Role.CUSTOMER])
+    @Roles([Role.CUSTOMER, Role.ADMIN])
     @UseGuards(JwtAuthGuard, RoleGuard)
     @ApiResponse({ status: 200, description: 'Return all users.' })
     @HttpCode(HttpStatus.OK)
@@ -64,6 +66,8 @@ export class UserController {
     }
 
     @Put('')
+    @Roles([Role.CUSTOMER, Role.ADMIN])
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
     async update(
         @getCurrentUserId() userId: number,
@@ -73,12 +77,16 @@ export class UserController {
     }
 
     @Put('block/:id')
+    @Roles([Role.ADMIN])
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
     async block(@Param('id') userId: number): Promise<any> {
         return this.userService.block(userId);
     }
 
     @Delete('/:id')
+    @Roles([Role.ADMIN])
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
     async delete(@Param('id') userId: number): Promise<any> {
         return this.userService.delete(userId);

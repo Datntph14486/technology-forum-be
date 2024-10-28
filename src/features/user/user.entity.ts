@@ -13,6 +13,7 @@ import {
 } from 'typeorm';
 import { FileEntity } from '../file/file.entity';
 import { PostEntity } from '../post/post.entity';
+import { DiscussEntity } from '../discuss/discuss.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -85,6 +86,10 @@ export class UserEntity extends BaseEntity {
     @OneToMany(() => PostEntity, (post) => post.author)
     @JoinColumn()
     posts: PostEntity[];
+
+    @OneToMany(() => DiscussEntity, (discuss) => discuss.author)
+    @JoinColumn()
+    discuss: DiscussEntity[];
 
     @Column({ name: 'deleted_at', nullable: true })
     deletedAt: Date;

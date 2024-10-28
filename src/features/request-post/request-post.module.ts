@@ -5,9 +5,16 @@ import { RequestPostService } from './request-post.service';
 import { RequestPostEntity } from './request-post.entity';
 import { RequestPostController } from './request-post.controller';
 import { PostModule } from '../post/post.module';
+import { AuthModule } from '../auth/auth.module';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([RequestPostEntity]), PostModule],
+    imports: [
+        TypeOrmModule.forFeature([RequestPostEntity]),
+        PostModule,
+        AuthModule,
+    ],
     controllers: [RequestPostController],
     providers: [RequestPostService],
     exports: [RequestPostService],
