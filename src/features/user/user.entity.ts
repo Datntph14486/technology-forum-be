@@ -83,6 +83,9 @@ export class UserEntity extends BaseEntity {
     })
     role: Role;
 
+    @Column({ type: 'int4', name: 'total_unread_notification', default: 0 })
+    totalUnreadNotification: number;
+
     @OneToMany(() => PostEntity, (post) => post.author)
     @JoinColumn()
     posts: PostEntity[];
