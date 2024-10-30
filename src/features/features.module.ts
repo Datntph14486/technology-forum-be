@@ -11,6 +11,8 @@ import { PostModule } from './post/post.module';
 import { TemplateModule } from './template/template.module';
 import { TopicModule } from './topic/topic.module';
 import { DiscussModule } from './discuss/discuss.module';
+import { RequestQuestionModule } from './request-question/request-question.module';
+import { QuestionModule } from './question/question.module';
 
 @Module({
     imports: [
@@ -25,6 +27,8 @@ import { DiscussModule } from './discuss/discuss.module';
         TemplateModule,
         TopicModule,
         DiscussModule,
+        RequestQuestionModule,
+        QuestionModule,
     ],
     exports: [
         AuthModule,
@@ -38,6 +42,8 @@ import { DiscussModule } from './discuss/discuss.module';
         TemplateModule,
         TopicModule,
         DiscussModule,
+        RequestQuestionModule,
+        QuestionModule,
     ],
 })
 export class FeaturesModule {}

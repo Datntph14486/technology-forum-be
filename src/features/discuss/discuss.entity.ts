@@ -16,6 +16,9 @@ export class DiscussEntity extends BaseEntity {
     @Column({ type: 'json', name: 'detail_point' })
     detailPoint: string;
 
+    @Column({ type: 'bool', name: 'is_has_child', default: false })
+    isHasChild: boolean;
+
     @ManyToOne(() => DiscussEntity, (discuss) => discuss.children)
     parent: DiscussEntity;
 

@@ -56,6 +56,15 @@ export class DiscussService {
 
         const saveDiscuss = await this.discussRepository.save(newDisCuss);
 
+        if (discussParent) {
+            this.discussRepository.update(
+                { id: discussParent.id },
+                {
+                    isHasChild: true,
+                },
+            );
+        }
+
         return saveDiscuss;
     }
 
@@ -181,5 +190,29 @@ export class DiscussService {
         });
 
         return discuss;
+    }
+
+    async deleteBydId(userId: number, discussId: number) {
+        const discuss = await this.discussRepository.findOne({
+            where: {
+                id: discussId,
+                author: {
+                    id: userId,
+                },
+            },
+        });
+
+        if (!discuss) {
+            throw new NotFoundException(NOT_FOUND_ERROR.DISCUSS);
+        }
+
+        const deletedDiscuss = await this.discussRepository.update(
+            { id: discuss.id },
+            {
+                deletedAt: new Date(),
+            },
+        );
+
+        return deletedDiscuss;
     }
 }

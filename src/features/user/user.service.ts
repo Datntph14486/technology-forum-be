@@ -17,9 +17,10 @@ import { SendEmailToNewAccountDto } from '../mail/dto/send-email-to-new-account.
 import { AwsService } from '../aws/aws.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { IUserService } from './interface';
 
 @Injectable()
-export class UserService {
+export class UserService implements IUserService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,

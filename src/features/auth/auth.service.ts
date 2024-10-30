@@ -30,9 +30,10 @@ import { emailTemplateForgotPassword } from 'src/common/template/forgot-password
 import { MailService } from '../mail/mail.service';
 import { SendEmailDto } from '../mail/dto/send-email.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { IAuthService } from './interface';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
     constructor(
         private jwtService: JwtService,
 
@@ -168,7 +169,7 @@ export class AuthService {
         };
     }
 
-    async logout(userId: number) {
+    async logout(userId: number): Promise<void> {
         await this.userRepository.update(userId, {
             hashedRT: null,
         });

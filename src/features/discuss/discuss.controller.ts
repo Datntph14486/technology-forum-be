@@ -7,6 +7,7 @@ import {
     UseGuards,
     Get,
     Param,
+    Delete,
 } from '@nestjs/common';
 import { DiscussService } from './discuss.service';
 import { CreateDiscussDto } from './dto/create.discuss.dto';
@@ -39,5 +40,13 @@ export class DiscussController {
     @Get('get-by-parent-id/:id')
     async getDisCussByParentId(@Param('id') id: number) {
         return this.discussService.getDisCussByParentId(id);
+    }
+
+    @Delete('/:id')
+    async deleteBydId(
+        @getCurrentUserId() userId: number,
+        @Param('id') id: number,
+    ) {
+        return this.discussService.deleteBydId(userId, id);
     }
 }
