@@ -43,6 +43,9 @@ export const NOT_FOUND_ERROR = {
     TEMPLATE: 'Template not found !',
     TOPIC: 'Topic not found !',
     DISCUSS: 'Discuss not found !',
+    QUESTION: 'Question not found !',
+    REPOSITORY: 'Repository not found !',
+    CONTENT_INCREMENT_POINT: 'Content not found',
 };
 
 export const EXIST_ERROR = {

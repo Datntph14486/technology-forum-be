@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from './question.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UserService } from '../user/user.service';
 import { NOT_FOUND_ERROR } from 'src/common/constants';
@@ -32,5 +32,20 @@ export class QuestionService {
         const saveQuestion = await this.questionRepository.save(question);
 
         return saveQuestion;
+    }
+
+    async findById(questionId: number) {
+        const question = await this.questionRepository.findOne({
+            where: {
+                id: questionId,
+                deletedAt: IsNull(),
+            },
+        });
+
+        if (!question) {
+            throw new NotFoundException(NOT_FOUND_ERROR.QUESTION);
+        }
+
+        return question;
     }
 }
