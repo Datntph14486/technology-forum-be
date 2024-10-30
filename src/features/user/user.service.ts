@@ -17,7 +17,8 @@ import { SendEmailToNewAccountDto } from '../mail/dto/send-email-to-new-account.
 import { AwsService } from '../aws/aws.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { IUserService } from './interface';
+import { INCREASE_OR_DECREMENT, IUserService } from './interface';
+import { increaseOrDecrementDto } from './dto/increase-or-decrement-follower.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -186,5 +187,61 @@ export class UserService implements IUserService {
         }
 
         return user;
+    }
+
+    async increaseOrDecrementFollower(dto: increaseOrDecrementDto) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: dto.userId,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        if (dto.type == INCREASE_OR_DECREMENT.DECREMENT) {
+            await this.userRepository.decrement(
+                { id: dto.userId },
+                'totalFollower',
+                dto.target,
+            );
+        } else {
+            await this.userRepository.increment(
+                { id: dto.userId },
+                'totalFollower',
+                dto.target,
+            );
+        }
+
+        return true;
+    }
+
+    async increaseOrDecrementFollowing(dto: increaseOrDecrementDto) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: dto.userId,
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        if (dto.type == INCREASE_OR_DECREMENT.DECREMENT) {
+            await this.userRepository.decrement(
+                { id: dto.userId },
+                'totalFollowing',
+                dto.target,
+            );
+        } else {
+            await this.userRepository.increment(
+                { id: dto.userId },
+                'totalFollowing',
+                dto.target,
+            );
+        }
+
+        return true;
     }
 }

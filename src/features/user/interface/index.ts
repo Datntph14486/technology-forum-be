@@ -25,3 +25,8 @@ export interface IUserService {
 
     findById(id: number): Promise<UserEntity>;
 }
+
+export enum INCREASE_OR_DECREMENT {
+    INCREASE = 'increase',
+    DECREMENT = 'decrement',
+}
