@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostEntity } from './post.entity';
 import { TopicModule } from '../topic/topic.module';
 import { UserModule } from '../user/user.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { UserModule } from '../user/user.module';
         TechnologyModule,
         TopicModule,
         UserModule,
+        AuthModule,
     ],
     controllers: [PostController],
     providers: [PostService],

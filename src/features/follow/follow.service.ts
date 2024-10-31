@@ -10,6 +10,7 @@ export class FollowService {
     constructor(
         @InjectRepository(FollowEntity)
         private readonly followRepository: Repository<FollowEntity>,
+
         private userService: UserService,
     ) {}
 
@@ -37,6 +38,7 @@ export class FollowService {
                 user,
                 targetId: targetUser.id,
             });
+
             await this.followRepository.save(newFollow);
         } else {
             await this.followRepository.delete({ id: oldFollow.id });

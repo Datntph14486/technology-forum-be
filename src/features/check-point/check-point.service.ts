@@ -50,10 +50,7 @@ export class CheckPointService {
         };
     }
 
-    async incrementOrReducePoints(
-        userId: number,
-        dto: IncrementOrReducePointsDto,
-    ) {
+    async incrementPoints(userId: number, dto: IncrementOrReducePointsDto) {
         const repository = await this.repository[dto.relatedType];
         const contentType = await this.contentType[dto.relatedType];
         const user = await this.userService.findById(userId);
@@ -102,6 +99,54 @@ export class CheckPointService {
             await this.checkPointRepository.save(newCheckPoint);
 
             await repository.increment({ id: content.id }, 'point', 1);
+        } else {
+            return true;
+        }
+
+        return true;
+    }
+
+    async reducePoints(userId: number, dto: IncrementOrReducePointsDto) {
+        const repository = await this.repository[dto.relatedType];
+        const contentType = await this.contentType[dto.relatedType];
+        const user = await this.userService.findById(userId);
+
+        if (!user) {
+            throw new NotFoundException(NOT_FOUND_ERROR.USER);
+        }
+
+        if (!contentType) {
+            throw new NotFoundException(
+                NOT_FOUND_ERROR.CONTENT_INCREMENT_POINT,
+            );
+        }
+
+        if (!repository) {
+            throw new NotFoundException(NOT_FOUND_ERROR.REPOSITORY);
+        }
+
+        const content = await repository.findOne({
+            where: {
+                id: dto.relatedId,
+            },
+        });
+
+        if (!content) {
+            throw new NotFoundException(
+                NOT_FOUND_ERROR.CONTENT_INCREMENT_POINT,
+            );
+        }
+
+        const checkPoint = await this.checkPointRepository.findOne({
+            where: {
+                relatedType: contentType,
+                relatedId: content.id,
+                author: user,
+            },
+        });
+
+        if (!checkPoint) {
+            return true;
         } else {
             await this.checkPointRepository.delete({ id: checkPoint.id });
 

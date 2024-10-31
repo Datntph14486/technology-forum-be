@@ -5,12 +5,14 @@ import { RequestQuestionController } from './request-question.controller';
 import { QuestionModule } from '../question/question.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RequestQuestionEntity } from './request-question.entity';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([RequestQuestionEntity]),
         UserModule,
         QuestionModule,
+        AuthModule,
     ],
     providers: [RequestQuestionService],
     exports: [RequestQuestionService],

@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-@Controller('follows')
-export class FollowController {
+@Controller('follow-links')
+export class FollowLinkController {
     constructor() {}
 }

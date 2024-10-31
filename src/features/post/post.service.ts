@@ -78,4 +78,23 @@ export class PostService {
 
         return posts;
     }
+
+    async delete(postId: number) {
+        const post = await this.postRepository.findOne({
+            where: {
+                id: postId,
+            },
+        });
+
+        if (!post) {
+            throw new NotFoundException(NOT_FOUND_ERROR.POST);
+        }
+
+        const deletedPost = await this.postRepository.update(
+            { id: post.id },
+            { deletedAt: new Date() },
+        );
+
+        return deletedPost;
+    }
 }

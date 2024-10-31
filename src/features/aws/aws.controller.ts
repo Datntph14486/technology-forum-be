@@ -19,7 +19,7 @@ import { RoleGuard } from '../auth/guards/roles.guard';
 export class AwsController {
     constructor(private awsService: AwsService) {}
 
-    @Roles([Role.ADMIN])
+    @Roles([Role.ADMIN, Role.CUSTOMER])
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Post('upload-file')
     @UseInterceptors(FileInterceptor('file'))

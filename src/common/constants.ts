@@ -33,6 +33,7 @@ export const COMMON_MESSAGE = {
     PASSWORD_NOT_MATCH: 'Passwords do not match',
     FORBIDDEN: "you don't have permission to access this resource",
     NAME_ALREADY_EXISTS: 'Name already exists !',
+    FOLLOW_LINK_EXISTS: 'Follow link already exists !',
     TEMPLATE_TYPE: 'Template type already exists !',
 };
 
@@ -46,6 +47,8 @@ export const NOT_FOUND_ERROR = {
     QUESTION: 'Question not found !',
     REPOSITORY: 'Repository not found !',
     CONTENT_INCREMENT_POINT: 'Content not found',
+    FOLLOW_LINK: 'Follow link not found !',
+    FOLLOW: 'Follow not found !',
 };
 
 export const EXIST_ERROR = {

@@ -8,6 +8,7 @@ import { PostEntity } from '../post/post.entity';
 import { DiscussEntity } from '../discuss/discuss.entity';
 import { QuestionEntity } from '../question/question.entity';
 import { AnswerEntity } from '../answer/answer.entity';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { AnswerEntity } from '../answer/answer.entity';
             AnswerEntity,
         ]),
         UserModule,
+        AuthModule,
     ],
     controllers: [CheckPointController],
     providers: [CheckPointService],

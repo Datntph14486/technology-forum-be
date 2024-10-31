@@ -15,6 +15,8 @@ import { RequestQuestionModule } from './request-question/request-question.modul
 import { QuestionModule } from './question/question.module';
 import { CheckPointModule } from './check-point/check-point.module';
 import { AnswerModule } from './answer/answer.module';
+import { FollowModule } from './follow/follow.module';
+import { FollowLinkModule } from './follow-links/follow-links.module';
 
 @Module({
     imports: [
@@ -33,6 +35,8 @@ import { AnswerModule } from './answer/answer.module';
         QuestionModule,
         AnswerModule,
         CheckPointModule,
+        FollowModule,
+        FollowLinkModule,
     ],
     exports: [
         AuthModule,
@@ -50,6 +54,8 @@ import { AnswerModule } from './answer/answer.module';
         QuestionModule,
         AnswerModule,
         CheckPointModule,
+        FollowModule,
+        FollowLinkModule,
     ],
 })
 export class FeaturesModule {}
