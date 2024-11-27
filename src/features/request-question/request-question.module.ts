@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UserModule } from '../user/user.module';
 import { RequestQuestionService } from './request-question.service';
 import { RequestQuestionController } from './request-question.controller';
@@ -11,8 +11,9 @@ import { AuthModule } from '../auth/auth.module';
     imports: [
         TypeOrmModule.forFeature([RequestQuestionEntity]),
         UserModule,
-        QuestionModule,
+
         AuthModule,
+        forwardRef(() => QuestionModule),
     ],
     providers: [RequestQuestionService],
     exports: [RequestQuestionService],

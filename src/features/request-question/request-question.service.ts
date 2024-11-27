@@ -1,5 +1,10 @@
 import { QuestionService } from './../question/question.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    forwardRef,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RequestQuestionEntity } from './request-question.entity';
 import { Repository } from 'typeorm';
@@ -18,6 +23,7 @@ export class RequestQuestionService {
 
         private userService: UserService,
 
+        @Inject(forwardRef(() => QuestionService))
         private questionService: QuestionService,
     ) {}
 

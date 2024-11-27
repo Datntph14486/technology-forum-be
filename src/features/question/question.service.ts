@@ -1,10 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    forwardRef,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from './question.entity';
 import { IsNull, Repository } from 'typeorm';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UserService } from '../user/user.service';
 import { NOT_FOUND_ERROR } from 'src/common/constants';
+import { AnswerService } from '../answer/answer.service';
 
 @Injectable()
 export class QuestionService {
@@ -13,6 +19,9 @@ export class QuestionService {
         private readonly questionRepository: Repository<QuestionEntity>,
 
         private userService: UserService,
+
+        // @Inject(forwardRef(() => AnswerService))
+        // private answerService: AnswerService,
     ) {}
 
     async create(dto: CreateQuestionDto) {
@@ -47,5 +56,18 @@ export class QuestionService {
         }
 
         return question;
+    }
+
+    async findAnswersByQuestionId(questionId: number) {
+        const question = await this.questionRepository.findOne({
+            where: {
+                id: questionId,
+                deletedAt: IsNull(),
+            },
+        });
+
+        if (!question) {
+            throw new NotFoundException(NOT_FOUND_ERROR.QUESTION);
+        }
     }
 }

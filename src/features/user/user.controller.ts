@@ -30,8 +30,8 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Post('')
-    @Roles([Role.CUSTOMER, Role.ADMIN])
-    @UseGuards(JwtAuthGuard, RoleGuard)
+    // @Roles([Role.CUSTOMER, Role.ADMIN])
+    // @UseGuards(JwtAuthGuard, RoleGuard)
     @UseInterceptors(FileInterceptor('file'))
     @ApiBody({
         description: 'The data needed to create a new user',

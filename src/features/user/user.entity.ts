@@ -17,7 +17,7 @@ import { DiscussEntity } from '../discuss/discuss.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: number;
 
     @Column({ name: 'email', unique: true, nullable: false })

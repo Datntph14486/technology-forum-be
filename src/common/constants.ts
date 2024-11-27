@@ -49,6 +49,7 @@ export const NOT_FOUND_ERROR = {
     CONTENT_INCREMENT_POINT: 'Content not found',
     FOLLOW_LINK: 'Follow link not found !',
     FOLLOW: 'Follow not found !',
+    ANSWER: 'Answer not found !',
 };
 
 export const EXIST_ERROR = {
