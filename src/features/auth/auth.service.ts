@@ -1,6 +1,7 @@
 import {
     BadRequestException,
     ForbiddenException,
+    Inject,
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
@@ -31,6 +32,8 @@ import { MailService } from '../mail/mail.service';
 import { SendEmailDto } from '../mail/dto/send-email.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { IAuthService } from './interface';
+import { RabbitMQService } from '../rabbit-mq/rabbit-mq.service';
+import { TestQueueDto } from '../rabbit-mq/dto/test-queue.dto';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -43,6 +46,9 @@ export class AuthService implements IAuthService {
         private configService: ConfigService,
 
         private mailService: MailService,
+
+        @Inject('RabbitMQService')
+        private readonly rabbitMQService: RabbitMQService,
 
         // @Inject(forwardRef(() => UserService))
         // private userService: UserService,
@@ -76,6 +82,11 @@ export class AuthService implements IAuthService {
             delete newUser.password;
 
             await this.updateRefreshTokenHash(newUser.id, tokens.refreshToken);
+
+            const data: TestQueueDto = {
+                body: 'Nguyen Tien Dat',
+            };
+            await this.rabbitMQService.push(data);
 
             return { user, tokens };
         } catch (error) {

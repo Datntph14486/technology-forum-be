@@ -56,3 +56,7 @@ export const EXIST_ERROR = {
     EMAIL_EXIST: 'Email already exists in the system',
     USERNAME_EXIST: 'Username already exists in the system',
 };
+
+export enum QueueName {
+    TEST_QUEUE = 'TEST_QUEUE',
+}

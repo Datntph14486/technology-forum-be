@@ -4,6 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { SerializeInterceptor } from './interceptors/serialize.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Transport } from '@nestjs/microservices';
+import { QueueName } from './common/constants';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -11,6 +13,24 @@ async function bootstrap() {
     const appConfig = configService.get('app');
 
     app.useGlobalInterceptors(new SerializeInterceptor());
+
+    const rabbitMQConfig = configService.get('rabbitMQ');
+
+    const { host, user, password, port } = rabbitMQConfig;
+
+    const url = `amqp://${user}:${password}@${host}:${port}`;
+
+    console.log(url);
+    app.connectMicroservice({
+        transport: Transport.RMQ,
+        options: {
+            urls: [url],
+            queue: QueueName.TEST_QUEUE,
+            queueOptions: { durable: false },
+        },
+    });
+
+    await app.startAllMicroservices();
 
     const config = new DocumentBuilder()
         .setTitle('technology-forum-api')

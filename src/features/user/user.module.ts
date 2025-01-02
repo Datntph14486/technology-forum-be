@@ -12,6 +12,8 @@ import { AwsModule } from '../aws/aws.module';
 import { AwsService } from '../aws/aws.service';
 import { FileModule } from '../file/file.module';
 import { TemplateModule } from '../template/template.module';
+import { RabbitMQService } from '../rabbit-mq/rabbit-mq.service';
+import { RabbitMQModule } from '../rabbit-mq/rabbit-mq.module';
 
 @Module({
     imports: [
@@ -21,9 +23,16 @@ import { TemplateModule } from '../template/template.module';
         AwsModule,
         FileModule,
         TemplateModule,
+        RabbitMQModule,
     ],
     controllers: [UserController],
-    providers: [UserService, AuthService, MailService, AwsService],
+    providers: [
+        UserService,
+        AuthService,
+        MailService,
+        AwsService,
+        RabbitMQService,
+    ],
     exports: [UserService],
 })
 export class UserModule {}

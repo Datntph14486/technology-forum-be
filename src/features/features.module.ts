@@ -17,6 +17,7 @@ import { CheckPointModule } from './check-point/check-point.module';
 import { AnswerModule } from './answer/answer.module';
 import { FollowModule } from './follow/follow.module';
 import { FollowLinkModule } from './follow-links/follow-links.module';
+import { RabbitMQModule } from './rabbit-mq/rabbit-mq.module';
 
 @Module({
     imports: [
@@ -37,6 +38,7 @@ import { FollowLinkModule } from './follow-links/follow-links.module';
         CheckPointModule,
         FollowModule,
         FollowLinkModule,
+        RabbitMQModule,
     ],
     exports: [
         AuthModule,
@@ -56,6 +58,7 @@ import { FollowLinkModule } from './follow-links/follow-links.module';
         CheckPointModule,
         FollowModule,
         FollowLinkModule,
+        RabbitMQModule,
     ],
 })
 export class FeaturesModule {}
