@@ -1,5 +1,11 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import {
+    Ctx,
+    EventPattern,
+    MessagePattern,
+    Payload,
+    RmqContext,
+} from '@nestjs/microservices';
 import { QueueName } from 'src/common/constants';
 import { RabbitMQService } from './rabbit-mq.service';
 import { TestQueueDto } from './dto/test-queue.dto';
@@ -12,12 +18,30 @@ export class RabbitMQController {
     ) {}
 
     @Post()
-    async sendMessage(@Body() data: TestQueueDto): Promise<void> {
-        return this.rabbitMQService.push(data);
+    async sendMessage(
+        @Body() dto: TestQueueDto,
+    ): Promise<{ data: TestQueueDto }> {
+        return this.rabbitMQService.push(dto);
     }
 
     @MessagePattern(QueueName.TEST_QUEUE)
-    async handleMessage(message: string) {
-        console.log('message queue: ', message);
+    async handleMessage(
+        @Payload() message: string,
+        @Ctx() context: RmqContext,
+    ) {
+
+        const channel = context.getChannelRef(); // Lấy kênh RabbitMQ
+        const originalMessage = context.getMessage(); // Lấy message gốc từ hàng đợi
+
+        async function handle(m: string) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log('3');
+                }, 100);
+            });
+        }
+        await handle(message);
+
+        channel.ack(originalMessage);
     }
 }

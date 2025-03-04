@@ -18,6 +18,8 @@ import { AnswerModule } from './answer/answer.module';
 import { FollowModule } from './follow/follow.module';
 import { FollowLinkModule } from './follow-links/follow-links.module';
 import { RabbitMQModule } from './rabbit-mq/rabbit-mq.module';
+import { FirebaseModule } from './firebase/firebase.module';
+import { DeviceTokenModule } from './device-token/device-token.module';
 
 @Module({
     imports: [
@@ -39,6 +41,8 @@ import { RabbitMQModule } from './rabbit-mq/rabbit-mq.module';
         FollowModule,
         FollowLinkModule,
         RabbitMQModule,
+        FirebaseModule,
+        DeviceTokenModule,
     ],
     exports: [
         AuthModule,
@@ -59,6 +63,8 @@ import { RabbitMQModule } from './rabbit-mq/rabbit-mq.module';
         FollowModule,
         FollowLinkModule,
         RabbitMQModule,
+        FirebaseModule,
+        DeviceTokenModule,
     ],
 })
 export class FeaturesModule {}

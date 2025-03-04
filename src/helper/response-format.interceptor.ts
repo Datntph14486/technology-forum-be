@@ -12,11 +12,30 @@ import { COMMON_MESSAGE } from 'src/common/constants';
 export class ResponseFormatInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         return next.handle().pipe(
-            map((data) => {
-                // Định dạng lại response
+            map((response) => {
+                // Định dạng lại nếu response có dữ liệu phân trang
+                const isPaginated =
+                    response &&
+                    typeof response === 'object' &&
+                    'data' in response &&
+                    'meta' in response;
+
+                if (isPaginated) {
+                    return {
+                        statusCode: context.switchToHttp().getResponse()
+                            .statusCode,
+                        data: response.data,
+                        meta: {
+                            ...response.meta,
+                        },
+                        message: 'Request successful',
+                    };
+                }
+
+                // Định dạng lại response bình thường
                 return {
                     statusCode: context.switchToHttp().getResponse().statusCode,
-                    data,
+                    data: response,
                     message: 'Request successful',
                 };
             }),

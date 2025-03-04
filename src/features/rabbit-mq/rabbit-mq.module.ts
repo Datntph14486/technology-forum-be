@@ -19,14 +19,13 @@ const providers = [
 
             const url = `amqp://${username}:${password}@${host}:${port}`;
 
-            console.log('🚀 ~ url:', url);
             return ClientProxyFactory.create({
                 transport: Transport.RMQ,
                 options: {
                     urls: [url],
                     queue: QueueName.TEST_QUEUE,
                     queueOptions: { durable: false },
-                    noAck: true,
+                    // noAck: false, // Bật chế độ acknowledgment thủ công
                 },
             });
         },
