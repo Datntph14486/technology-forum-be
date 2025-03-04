@@ -10,13 +10,18 @@ export class RabbitMQService {
         private readonly rabbitmqClient: ClientProxy,
     ) {}
 
-    async push(dto: TestQueueDto) {
+    async push(dto: TestQueueDto): Promise<{ data: TestQueueDto }> {
+        console.log('🚀 ~ dto:', dto);
         try {
-             await this.rabbitmqClient
+            await this.rabbitmqClient
                 .send(QueueName.TEST_QUEUE, JSON.stringify(dto))
                 .toPromise();
         } catch (error) {
             console.log('🚀 ~ error push queue:', error);
         }
+
+        console.log('done push message');
+
+        return { data: dto };
     }
 }

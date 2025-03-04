@@ -12,6 +12,7 @@ import mailConfig from './config/mail.config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './features/auth/guards/jwt-auth.guard';
 import rabbitmqConfig from './config/rabbitmq.config';
+import firebaseConfig from './config/firebase.config';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import rabbitmqConfig from './config/rabbitmq.config';
                 awsConfig,
                 mailConfig,
                 rabbitmqConfig,
+                firebaseConfig,
             ],
         }),
         JwtModule.register({

@@ -27,6 +27,7 @@ async function bootstrap() {
             urls: [url],
             queue: QueueName.TEST_QUEUE,
             queueOptions: { durable: false },
+            // noAck: false, // Bật chế độ acknowledgment thủ công
         },
     });
 

@@ -14,6 +14,7 @@ import {
 import { FileEntity } from '../file/file.entity';
 import { PostEntity } from '../post/post.entity';
 import { DiscussEntity } from '../discuss/discuss.entity';
+import { DeviceTokenEntity } from '../device-token/device-token.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -99,6 +100,10 @@ export class UserEntity extends BaseEntity {
     @OneToMany(() => DiscussEntity, (discuss) => discuss.author)
     @JoinColumn()
     discuss: DiscussEntity[];
+
+    @OneToMany(() => DeviceTokenEntity, (deviceToken) => deviceToken.target)
+    @JoinColumn()
+    deviceTokens: DeviceTokenEntity[];
 
     @Column({ name: 'deleted_at', nullable: true })
     deletedAt: Date;
