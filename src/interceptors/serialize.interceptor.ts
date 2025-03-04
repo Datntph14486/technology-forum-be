@@ -48,14 +48,33 @@ export class SerializeInterceptor implements NestInterceptor {
     ): Observable<any> | Promise<Observable<any>> {
         console.log('1');
         return next.handle().pipe(
-            map((data: any) => {
+            map((response: any) => {
                 const statusCode =
                     context.switchToHttp().getResponse().statusCode ||
                     HttpStatus.OK;
 
+                // Định dạng lại nếu response có dữ liệu phân trang
+                const isPaginated =
+                    response &&
+                    typeof response === 'object' &&
+                    'data' in response &&
+                    'meta' in response;
+
+                if (isPaginated) {
+                    return {
+                        statusCode,
+                        data: response.data,
+                        meta: {
+                            ...response.meta,
+                        },
+                        message: 'Request successful',
+                    };
+                }
+
+                // Định dạng lại response bình thường
                 return {
                     statusCode,
-                    data,
+                    data: response,
                     message: 'Request successful',
                 };
             }),
